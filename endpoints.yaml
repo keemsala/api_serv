@@ -1,2 +1,3 @@
 /: SHOW SERVER_VERSION
 /tz: SHOW TIMEZONE
+/weather_stuff: SELECT * FROM weather_backup_data
