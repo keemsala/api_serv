@@ -52,3 +52,18 @@ def weather_stuff_by_page(page):
         res = con.execute(text(query), {'off': 50*int(page)})
         return [r._asdict() for r in res]
 
+@app.get("/mtbh/{page}")
+def mtbh_by_page(page):
+     with eng.connect() as con:
+        query = """
+                SELECT MAX(temperature) AS max_temp, DATE_PART AS hour
+                FROM(SELECT DISTINCT(DATE_PART('hour', timestamp_pacific)), temperature 
+                FROM weather_backup_data)
+                WHERE DATE_PART IS NOT NULL
+                GROUP BY DATE_PART
+                ORDER BY DATE_PART
+                LIMIT 50
+                OFFSET :off
+                """
+        res = con.execute(text(query), {'off': 50*int(page)})
+        return [r._asdict() for r in res]
