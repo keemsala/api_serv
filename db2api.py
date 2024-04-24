@@ -45,7 +45,7 @@ def weather_stuff_by_page(page):
         query = """
                 SELECT *
                 FROM weather_backup_data
-                ORDER BY date_time
+                ORDER BY date_time, id
                 LIMIT 50
                 OFFSET :off
                 """
@@ -84,7 +84,7 @@ def mtbh_by_page(page, hour:int=None):
 def mintbh_by_page(page, hour:int=None):
      with eng.connect() as con:
         query = """
-                SELECT MIN(temperature) AS max_temp, DATE_PART AS hour
+                SELECT MIN(temperature) AS min_temp, DATE_PART AS hour
                 FROM(SELECT DISTINCT(DATE_PART('hour', timestamp_pacific)), temperature 
                 FROM weather_backup_data)
                 WHERE DATE_PART IS NOT NULL
@@ -95,7 +95,7 @@ def mintbh_by_page(page, hour:int=None):
                 """
         if hour is not None:
             query = """
-                SELECT MIN(temperature) AS max_temp, DATE_PART AS hour
+                SELECT MIN(temperature) AS min_temp, DATE_PART AS hour
                 FROM(SELECT DISTINCT(DATE_PART('hour', timestamp_pacific)), temperature 
                 FROM weather_backup_data)
                 WHERE DATE_PART IS NOT NULL
