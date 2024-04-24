@@ -45,7 +45,7 @@ def weather_stuff_by_page(page):
         query = """
                 SELECT *
                 FROM weather_backup_data
-                ORDER BY date_time, id
+                ORDER BY id
                 LIMIT 50
                 OFFSET :off
                 """
