@@ -71,7 +71,7 @@ def mtbh_by_page(page, hour:int=None):
                 FROM(SELECT DISTINCT(DATE_PART('hour', timestamp_pacific)), temperature 
                 FROM weather_backup_data)
                 WHERE DATE_PART IS NOT NULL
-                AND hour = :hr
+                AND DATE_PART = :hr
                 GROUP BY DATE_PART
                 ORDER BY DATE_PART
                 LIMIT 50
